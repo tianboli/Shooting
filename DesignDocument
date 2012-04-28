@@ -1,0 +1,104 @@
+Desgin Document
+this project is a simulation of airplane game.
+this game runs very slow in my computer, so I changed the speed on each subject a bit higher to make the game faster.
+There are addscore, enemyshot, shotenemy, you, star, power, bullet,sun, enemybullet, controller,lv1background, enemy,planets, gates,shark,main 15 different classes, and 12 things.
+press space to start everytime. press 'A' to jump to Level3, press "S" to shoot, press p to pause, press direction key to controll airplane;
+level1 is tutorial, the easiest part in the game, when we attack any "frog" successfully, we go to lv2,
+at lv2:
+shotenemy and enemyshot are two subclasses of enemy(presented as balck dot in the real game);
+shotenemy moves in horizontal and shoot enemybullet to attack "you";
+enemyshot always follow you, unless you shoot them and they will reset(presented as green rectangle in the real game).
+each time you attack enemies or they attack you, score/hp will add/minus
+the total number of bullets won't change during the game time we are playing
+when we reach 100 at score
+we can go to lv3:
+here, we have more colorful background;
+and two postive items: addscore and powerup,
+collect each of them will give airplane bonus(addscore for score, powerup for hp)
+infinite game if hp != 0 || bullets = 0;
+
+Controller is the most important class in this project, it controls every object, manage them, make them move.
+same with breakout example, use painter to paint each object, timerevent to set their postions.
+use checkcollision to check on each level whether we shoot on something, and whether we can go to next level.
+using itersects method to achieve this.
+manage the startgame and stopgame.
+void paintEvent(QPaintEvent *event);
+    void timerEvent(QTimerEvent *event); 
+	To reset every objects 
+    void keyPressEvent(QKeyEvent *event);
+	To recact after each ket is pressed;
+    void startGame();
+	To start the game;
+    void pauseGame();
+	To pause the game
+    void stopGame();
+	to Stop the game;(LOST)
+    void victory();
+	To present the victory scene;
+    void checkCollision();
+	To check the objects collison and add or minus score/HP(LV1)
+    void checkCollisionlv2();
+	To check the objects collison and add or minus score/HP(LV1)
+    void checkCollisionlv3();
+	To check the objects collison and add or minus score/HP(LV1)
+    
+
+	void Level2();
+		assign the lv2 variable to true;
+void Level3();
+assign the lv3 variable to true;
+
+
+star, sun, shark are three subclasses of planets which acts like background, you can't hit them. these are just for fun!
+they will move monotonous but I picked some colorful images and made it looks funny
+functions:
+resetState(): resetState on each level.
+autoMove(): autoMove() set the move path 
+getPlanet(): return the QRect type of Planet;
+getPlanetImage(): return the image of Planet;
+
+
+you class is the object user can controll using direction key in the keyboard. 
+void resetState();
+Reset the postion of you
+
+    void moveLeft(int);move left
+    void moveRight(int);moev right
+	void moveTop(int);move top
+	void moveBottom(int);move bottom
+	
+    QRect getRect(); 	return the Qrect type of you
+    QImage & getImage();	return the image of you
+
+enemybullet is a subclass of bullet class launch bullets from you when we press s each time, I reset bullet everytime on the controller class each time Key_S is pressed, and autoMove() them, 
+  void resetState(int,int); reset the postion of bullet to the enemy postion
+    void autoMove(); launch it at a special path;
+    void clear();	clear the bullet once hit something;	
+    QRect getRect();	return QRect type of bullet;
+    QImage & getImage();	return image;
+Enemybullet class launches bulleys from enemy everytime enemyshot reach 50 and 250 on X value, when it intersects with "you", hp -=20;
+
+enemy class act like a bounce ball in level1 to help player practice. I used the same code from automove() part to make the bonus objects(addscore, powerup) bounce inside the screen, trying to make it more real.
+ void resetState();
+    void moveBottom(int); mvoe to bottom
+    void moveTop(int);	move to top;
+    void moveLeft(int);	move left;
+    void moveRight(int);	move right;
+    void autoMove();	move in sepcific path;
+    int getXDir();	return the direction of X;
+    int getYDir();	return the direction of y;
+    QRect getRect(),getRect2(),getRect3(),getRect4(),getRect5(),getRect6();
+	return the enemy's QRect;
+    QImage & getImage();	return the image;
+   
+gates class is still objects in this game pretend to be the exit to next level on each screen.
+
+main class is the easiest part which calls the controller and create a window for it.
+center() receives a widget(controller) use it manage screen.
+
+lv1background:
+void resetState(); set the the items in the background at apropriate locations
+
+    QRect getsunRect(),getbackRect(); return the QRect type of the background items
+    QImage & getsunImage(),&getbackImage();	return the image of the background items
+   
